@@ -228,13 +228,13 @@
       </dependency>
       <dependency>
         <groupId>pentaho</groupId>
-        <artifactId>pdi-dataservice-client-plugin</artifactId>
+        <artifactId>pdi-dataservice-client-impl</artifactId>
         <version>${project.version}</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>pentaho</groupId>
-        <artifactId>pdi-dataservice-client-plugin-api</artifactId>
+        <artifactId>pdi-dataservice-client-api</artifactId>
         <version>${project.version}</version>
         <scope>provided</scope>
       </dependency>

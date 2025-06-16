@@ -4,3 +4,5 @@ target/
 .settings/
 *.iml
 .idea
+.DS_Store
+.java-version
