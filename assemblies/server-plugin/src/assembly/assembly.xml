@@ -44,7 +44,6 @@ explicitly covering such access.
       <useTransitiveDependencies>false</useTransitiveDependencies>
       <useProjectArtifact>false</useProjectArtifact>
       <includes>
-        <include>pentaho:pdi-dataservice-client-plugin</include>
         <include>pentaho:pdi-dataservice-server-impl</include>
       </includes>
     </dependencySet>
