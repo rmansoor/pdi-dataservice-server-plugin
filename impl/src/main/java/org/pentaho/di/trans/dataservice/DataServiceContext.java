@@ -24,7 +24,9 @@ import org.pentaho.di.core.logging.LogChannelInterface;
 import org.pentaho.di.core.service.PluginServiceLoader;
 import org.pentaho.di.trans.dataservice.optimization.AutoOptimizationService;
 import org.pentaho.di.trans.dataservice.optimization.PushDownFactory;
+import org.pentaho.di.trans.dataservice.optimization.cache.ServiceCacheFactory;
 import org.pentaho.di.trans.dataservice.optimization.paramgen.*;
+import org.pentaho.di.trans.dataservice.optimization.pushdown.ParameterPushdownFactory;
 import org.pentaho.di.trans.dataservice.serialization.DataServiceMetaStoreUtil;
 import org.pentaho.di.trans.dataservice.streaming.StreamServiceKey;
 import org.pentaho.di.trans.dataservice.streaming.execution.StreamingGeneratedTransExecution;
@@ -38,6 +40,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class DataServiceContext implements Context {
@@ -102,6 +106,10 @@ public class DataServiceContext implements Context {
       AutoOptimizationService autoOptimizationService = new AutoParameterGenerationService( lineageClient, new ParameterGenerationFactory (serviceFactoryList ) );
       List<AutoOptimizationService> autoOptimizationServices = new ArrayList<>();
       autoOptimizationServices.add( autoOptimizationService );
+      ExecutorService executorService = Executors.newCachedThreadPool();
+      pushDownFactories.add( new ServiceCacheFactory( cacheManager, executorService ) );
+      pushDownFactories.add( new ParameterPushdownFactory() );
+      pushDownFactories.add( new ParameterGenerationFactory( serviceFactoryList ) );
       UIFactory uiFactory = new UIFactory();
       LogChannelInterface logChannel = new LogChannel("Data Services");
       instance = new DataServiceContext(pushDownFactories, autoOptimizationServices, cacheManager, uiFactory,logChannel);
