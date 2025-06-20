@@ -45,6 +45,7 @@ explicitly covering such access.
       <useProjectArtifact>false</useProjectArtifact>
       <includes>
         <include>pentaho:pdi-dataservice-server-impl</include>
+        <include>pentaho:pdi-dataservice-client-impl:*</include>
       </includes>
     </dependencySet>
     <dependencySet>
