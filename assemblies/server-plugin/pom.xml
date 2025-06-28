@@ -112,11 +112,5 @@
             <version>1.0.0</version>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>pentaho</groupId>
-            <artifactId>pentaho-metaverse-api</artifactId>
-            <version>${metastore.version}</version>
-            <scope>runtime</scope>
-        </dependency>
     </dependencies>
 </project>
