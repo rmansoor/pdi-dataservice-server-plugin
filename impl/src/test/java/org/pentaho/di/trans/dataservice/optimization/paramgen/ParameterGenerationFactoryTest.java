@@ -25,6 +25,7 @@ import org.pentaho.di.trans.dataservice.optimization.paramgen.ui.ParameterGenera
 import org.pentaho.di.trans.dataservice.optimization.paramgen.ui.SourceTargetAdapter;
 import org.pentaho.di.trans.dataservice.ui.model.DataServiceModel;
 import org.pentaho.di.trans.step.StepMeta;
+import org.pentaho.metaverse.api.ILineageClient;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isA;
@@ -39,10 +40,11 @@ public class ParameterGenerationFactoryTest {
   private ParameterGenerationFactory provider;
   @Mock ParameterGenerationServiceFactory serviceFactory;
   @Mock StepMeta stepMeta;
+  @Mock ILineageClient lineageClient;
 
   @Before
   public void setUp() throws Exception {
-    provider = new ParameterGenerationFactory( ImmutableList.of( serviceFactory ) );
+    provider = new ParameterGenerationFactory( ImmutableList.of( serviceFactory ), lineageClient );
   }
 
   @Test

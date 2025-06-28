@@ -103,14 +103,14 @@ public class DataServiceContext implements Context {
       } catch ( Exception e ) {
         e.printStackTrace();
       }
-      AutoOptimizationService autoOptimizationService = new AutoParameterGenerationService( lineageClient, new ParameterGenerationFactory (serviceFactoryList ) );
+      AutoOptimizationService autoOptimizationService = new AutoParameterGenerationService( lineageClient, new ParameterGenerationFactory (serviceFactoryList, lineageClient ) );
       List<AutoOptimizationService> autoOptimizationServices = new ArrayList<>();
       autoOptimizationServices.add( autoOptimizationService );
       // populate optimization ui tabs
       ExecutorService executorService = Executors.newCachedThreadPool();
       pushDownFactories.add( new ServiceCacheFactory( cacheManager, executorService ) );
       pushDownFactories.add( new ParameterPushdownFactory() );
-      pushDownFactories.add( new ParameterGenerationFactory( serviceFactoryList ) );
+      pushDownFactories.add( new ParameterGenerationFactory( serviceFactoryList, lineageClient ) );
 
       UIFactory uiFactory = new UIFactory();
       LogChannelInterface logChannel = new LogChannel("Data Services");

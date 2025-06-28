@@ -43,6 +43,7 @@ import org.pentaho.di.trans.step.StepMeta;
 import org.pentaho.di.trans.steps.tableinput.TableInput;
 import org.pentaho.di.trans.steps.tableinput.TableInputData;
 import org.pentaho.di.trans.steps.tableinput.TableInputMeta;
+import org.pentaho.metaverse.api.ILineageClient;
 
 import java.sql.Connection;
 import java.util.Arrays;
@@ -76,8 +77,9 @@ public class TableInputParameterGenerationTest {
 
   public static final String MOCK_PARTITION_ID = "Mock Partition ID";
   public static final String MOCK_CONNECTION_GROUP = "Mock Connection Group";
+  @Mock  ILineageClient lineageClient;
   private ParameterGenerationFactory factory =
-    new ParameterGenerationFactory( Collections.<ParameterGenerationServiceFactory>emptyList() );
+    new ParameterGenerationFactory( Collections.<ParameterGenerationServiceFactory>emptyList(), lineageClient );
   @Mock private TableInput stepInterface;
   @Mock private DatabaseMeta databaseMeta;
   @Mock private ValueMetaResolver resolver;

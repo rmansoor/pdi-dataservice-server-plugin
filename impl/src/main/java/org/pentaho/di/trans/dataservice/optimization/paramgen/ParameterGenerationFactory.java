@@ -39,8 +39,9 @@ public class ParameterGenerationFactory implements PushDownFactory {
   private final List<ParameterGenerationServiceFactory> factories;
   private ILineageClient lineageClient;
 
-  public ParameterGenerationFactory( List<ParameterGenerationServiceFactory> factories ) {
+  public ParameterGenerationFactory( List<ParameterGenerationServiceFactory> factories, ILineageClient lineageClient ) {
     this.factories = factories;
+    this.lineageClient = lineageClient;
   }
 
   public ILineageClient getLineageClient() {
