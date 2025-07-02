@@ -31,6 +31,8 @@ import org.pentaho.di.trans.dataservice.jdbc.ThinServiceInformation;
 import org.pentaho.di.trans.dataservice.jdbc.api.IThinServiceInformation;
 import org.pentaho.di.trans.dataservice.resolvers.DataServiceResolver;
 import org.pentaho.di.trans.dataservice.resolvers.DataServiceResolverDelegate;
+import org.pentaho.di.trans.dataservice.resolvers.MetaStoreResolver;
+import org.pentaho.di.trans.dataservice.resolvers.TransientResolver;
 import org.pentaho.metastore.api.IMetaStore;
 
 import java.io.DataInputStream;
@@ -59,6 +61,8 @@ public class DataServiceClient implements IDataServiceClientService {
     if ( client == null ) {
       List<Query.Service> queryServices = new ArrayList<>();
       DataServiceResolverDelegate dataServiceResolverDelegate = new DataServiceResolverDelegate();
+      dataServiceResolverDelegate.addResolver( new TransientResolver());
+      dataServiceResolverDelegate.addResolver( new MetaStoreResolver( DataServiceContext.getInstance() ));
       queryServices.add( new CommandQueryService( DataServiceContext.getInstance() ) );
       queryServices.add( new AnnotationsQueryService( dataServiceResolverDelegate ) );
       queryServices.add( new DualQueryService() );
