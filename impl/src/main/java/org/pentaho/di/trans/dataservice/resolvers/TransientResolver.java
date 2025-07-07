@@ -57,7 +57,6 @@ public class TransientResolver implements DataServiceResolver {
   private LogLevel logLevel;
   private Supplier<Spoon> spoonSupplier;
 
-  // OSGi blueprint constructor
   public TransientResolver( DataServiceContext context,
                             ServiceCacheFactory cacheFactory, final LogLevel logLevel ) {
     this( null, context, cacheFactory, logLevel, Spoon::getInstance );

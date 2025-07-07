@@ -61,6 +61,10 @@ public class TransDataServlet extends BaseCartePlugin {
 
   public static final String CONTEXT_PATH = "/sql";
 
+  public TransDataServlet( ) {
+    this ( DataServiceClient.getInstance() );
+  }
+
   public TransDataServlet( DataServiceClient client ) {
     this.client = client;
     this.log = client.getLogChannel();

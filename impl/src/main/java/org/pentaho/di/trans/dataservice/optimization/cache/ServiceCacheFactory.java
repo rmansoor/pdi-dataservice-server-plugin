@@ -20,6 +20,7 @@ import com.google.common.util.concurrent.MoreExecutors;
 import org.pentaho.caching.api.PentahoCacheManager;
 import org.pentaho.caching.api.PentahoCacheTemplateConfiguration;
 import org.pentaho.di.core.RowMetaAndData;
+import org.pentaho.di.trans.dataservice.DataServiceCacheManagerService;
 import org.pentaho.di.trans.dataservice.DataServiceExecutor;
 import org.pentaho.di.trans.dataservice.optimization.PushDownFactory;
 import org.pentaho.di.trans.dataservice.optimization.cache.ui.ServiceCacheController;
@@ -31,6 +32,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.function.Supplier;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -45,9 +47,16 @@ public class ServiceCacheFactory implements PushDownFactory {
   private final PentahoCacheManager cacheManager;
 
   private final ListeningExecutorService executorService;
+  private static ServiceCacheFactory instance;
 
   private final Map<CachedService.CacheKey, ServiceObserver> runningServices = new ConcurrentHashMap<>();
 
+  public static ServiceCacheFactory getInstance() {
+    if (instance == null ) {
+      instance =  new ServiceCacheFactory(  DataServiceCacheManagerService.getInstance(), Executors.newCachedThreadPool() );
+    }
+    return instance;
+  }
   public ServiceCacheFactory( PentahoCacheManager cacheManager, ExecutorService executorService ) {
     this.cacheManager = cacheManager;
     this.executorService = MoreExecutors.listeningDecorator( executorService );

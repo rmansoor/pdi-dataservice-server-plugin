@@ -29,11 +29,14 @@ import org.pentaho.di.trans.dataservice.DataServiceMeta;
 import org.pentaho.di.trans.dataservice.client.api.IDataServiceClientService;
 import org.pentaho.di.trans.dataservice.jdbc.ThinServiceInformation;
 import org.pentaho.di.trans.dataservice.jdbc.api.IThinServiceInformation;
+import org.pentaho.di.trans.dataservice.optimization.cache.ServiceCacheFactory;
 import org.pentaho.di.trans.dataservice.resolvers.DataServiceResolver;
 import org.pentaho.di.trans.dataservice.resolvers.DataServiceResolverDelegate;
 import org.pentaho.di.trans.dataservice.resolvers.MetaStoreResolver;
 import org.pentaho.di.trans.dataservice.resolvers.TransientResolver;
 import org.pentaho.metastore.api.IMetaStore;
+import org.pentaho.di.core.logging.LogChannel;
+import org.pentaho.di.core.logging.LogLevel;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -46,7 +49,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Function;
 
@@ -59,22 +61,24 @@ public class DataServiceClient implements IDataServiceClientService {
 
   public static DataServiceClient getInstance() {
     if ( client == null ) {
+      LogChannelInterface log = new LogChannel( "Data service client" );
       List<Query.Service> queryServices = new ArrayList<>();
       DataServiceResolverDelegate dataServiceResolverDelegate = new DataServiceResolverDelegate();
-      dataServiceResolverDelegate.addResolver( new TransientResolver());
+      dataServiceResolverDelegate.addResolver( new TransientResolver( DataServiceContext.getInstance(), ServiceCacheFactory.getInstance(), LogLevel.BASIC ));
       dataServiceResolverDelegate.addResolver( new MetaStoreResolver( DataServiceContext.getInstance() ));
       queryServices.add( new CommandQueryService( DataServiceContext.getInstance() ) );
       queryServices.add( new AnnotationsQueryService( dataServiceResolverDelegate ) );
       queryServices.add( new DualQueryService() );
       queryServices.add( new ExecutorQueryService( dataServiceResolverDelegate ) );
-      client = new DataServiceClient( new QueryServiceDelegate( queryServices ), dataServiceResolverDelegate );
+      client = new DataServiceClient( new QueryServiceDelegate( queryServices ), dataServiceResolverDelegate, log);
     }
     return client;
   }
 
-  private DataServiceClient( Query.Service queryService, DataServiceResolver resolver) {
+  private DataServiceClient( Query.Service queryService, DataServiceResolver resolver, LogChannelInterface log) {
     this.queryService = queryService;
     this.resolver = resolver;
+    this.log = log;
   }
 
   @Override public DataInputStream query( String sqlQuery, final int maxRows ) throws SQLException {

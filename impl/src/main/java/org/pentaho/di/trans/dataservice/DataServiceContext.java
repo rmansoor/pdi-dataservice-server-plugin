@@ -40,8 +40,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class DataServiceContext implements Context {
@@ -107,8 +105,7 @@ public class DataServiceContext implements Context {
       List<AutoOptimizationService> autoOptimizationServices = new ArrayList<>();
       autoOptimizationServices.add( autoOptimizationService );
       // populate optimization ui tabs
-      ExecutorService executorService = Executors.newCachedThreadPool();
-      pushDownFactories.add( new ServiceCacheFactory( cacheManager, executorService ) );
+      pushDownFactories.add( ServiceCacheFactory.getInstance() );
       pushDownFactories.add( new ParameterPushdownFactory() );
       pushDownFactories.add( new ParameterGenerationFactory( serviceFactoryList, lineageClient ) );
 

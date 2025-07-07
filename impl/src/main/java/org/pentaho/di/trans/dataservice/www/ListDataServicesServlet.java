@@ -49,6 +49,11 @@ public class ListDataServicesServlet extends BaseCartePlugin {
   private final String CONTENT_CHARSET = "utf-8";
   private final DataServiceClient client;
 
+
+  public ListDataServicesServlet(  ) {
+    this( DataServiceClient.getInstance() );
+  }
+
   public ListDataServicesServlet( DataServiceClient client ) {
     this.client = client;
     this.log = client.getLogChannel();

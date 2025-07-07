@@ -37,7 +37,6 @@ public class MetaStoreResolver implements DataServiceResolver {
 
   private DataServiceDelegate delegate;
 
-  // OSGi constructor
   public MetaStoreResolver( DataServiceContext context ) {
     KettleRepositoryLocator repositoryLocator;
     try {
