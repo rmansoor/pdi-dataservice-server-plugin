@@ -4,13 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>pentaho</groupId>
-    <artifactId>pdi-dataservice-server-plugin</artifactId>
-    <version>10.3.0.0-SNAPSHOT</version>
-    <parent>
-        <groupId>pentaho</groupId>
-        <artifactId>pdi-dataservice-server-plugin-assemblies</artifactId>
-        <version>10.3.0.0-SNAPSHOT</version>
-    </parent>
+    <artifactId>pdi-dataservice-server-plugin</artifactId>        <version>11.0.0.0-SNAPSHOT</version>
+  <parent>
+    <groupId>pentaho</groupId>
+    <artifactId>pdi-dataservice-server-plugin-assemblies</artifactId>
+    <version>11.0.0.0-SNAPSHOT</version>
+  </parent>
     <packaging>pom</packaging>
     <properties>
         <cache-api.version>1.0.0</cache-api.version>
