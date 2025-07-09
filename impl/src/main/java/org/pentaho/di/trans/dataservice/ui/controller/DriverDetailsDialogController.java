@@ -85,7 +85,7 @@ public class DriverDetailsDialogController extends AbstractController {
         getString( PKG, "DriverDetailsDialog.DriverZipPath", "." );
     File[] matchingFiles = new File( driverFolderPath ).listFiles( new FilenameFilter() {
       public boolean accept( File dir, String name ) {
-        return name.startsWith( getString( PKG, "DriverDetailsDialog.DriverZipNamePrefix" ) ) && name.endsWith( "zip" );
+        return name.startsWith( getString( PKG, "DriverDetailsDialog.DriverZipNamePrefix" ) ) && name.endsWith( "jar" );
       }
     } );
 
@@ -102,7 +102,7 @@ public class DriverDetailsDialogController extends AbstractController {
     FileDialog dialog = new FileDialog( getDialog().getShell(), SWT.SAVE );
     dialog.setFilterNames( new String[] { getString( PKG, "DriverDetailsDialog.SaveDialog.ZipFilesFilter.Label" ),
         getString( PKG, "DriverDetailsDialog.SaveDialog.AllFilesFilter.Label" ) } );
-    dialog.setFilterExtensions( new String[] { "*.zip", "*.*" } );
+    dialog.setFilterExtensions( new String[] { "*.jar", "*.*" } );
     dialog.setFileName( getString( PKG, "DriverDetailsDialog.SaveDialog.DefaultFileName.Label" ) );
     String savePath = dialog.open();
 
