@@ -18,6 +18,7 @@ import com.google.common.base.Predicates;
 import com.google.common.collect.FluentIterable;
 import com.google.common.net.MediaType;
 import org.pentaho.di.core.annotations.CarteServlet;
+import org.pentaho.di.trans.dataservice.DataServiceCacheManagerService;
 import org.pentaho.di.www.BaseCartePlugin;
 
 import javax.cache.Cache;
@@ -25,6 +26,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Set;
+import java.util.concurrent.Executors;
 
 /**
  * This servlet allows a user to clear the data service cache
@@ -41,6 +43,10 @@ public class ResetCacheServlet extends BaseCartePlugin {
 
   public ResetCacheServlet( ServiceCacheFactory factory ) {
     this.factory = factory;
+  }
+
+  public ResetCacheServlet() {
+    this( new ServiceCacheFactory( DataServiceCacheManagerService.getInstance(), Executors.newCachedThreadPool() ) );
   }
 
   private static final String CONTEXT_PATH = "/clearDataServiceCache";
