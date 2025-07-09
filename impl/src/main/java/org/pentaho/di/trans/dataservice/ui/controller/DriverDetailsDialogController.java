@@ -82,8 +82,7 @@ public class DriverDetailsDialogController extends AbstractController {
 
   File getDriverBundle() throws FileNotFoundException, AccessDeniedException {
     String driverFolderPath =
-        getString( PKG, "DriverDetailsDialog.DriverZipPath", PentahoSystem.getApplicationContext()
-            .getSolutionRootPath() );
+        getString( PKG, "DriverDetailsDialog.DriverZipPath", "." );
     File[] matchingFiles = new File( driverFolderPath ).listFiles( new FilenameFilter() {
       public boolean accept( File dir, String name ) {
         return name.startsWith( getString( PKG, "DriverDetailsDialog.DriverZipNamePrefix" ) ) && name.endsWith( "zip" );
